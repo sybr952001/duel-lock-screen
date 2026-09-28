@@ -1,0 +1,9 @@
+# Sibling components here resolve implicitly because they are all declared in
+# this file -- importing a sibling as `import "DuelCard.qml"` is a *directory*
+# import and fails to load, which takes the whole lock plugin down with it.
+module duel
+
+DuelBoard 1.0 DuelBoard.qml
+DuelCard 1.0 DuelCard.qml
+ChainTrack 1.0 ChainTrack.qml
+DuelSession 1.0 DuelSession.qml

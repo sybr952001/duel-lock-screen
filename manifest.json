@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "makibuu.lock",
+  "name": "Duel Lock Screen",
+  "version": "2.0.0",
+  "author": "sybr952001",
+  "description": "Session lock behind a Yu-Gi-Oh duel puzzle: win the board for exact lethal, then authenticate with the password over PAM.",
+  "omarchy": {
+    "capabilities": [
+      "authentication"
+    ],
+    "clonedFrom": "omarchy.lock"
+  },
+  "kinds": [
+    "service"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml"
+  }
+}
