@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 import "DuelModel.js" as Duel
 
@@ -43,21 +44,21 @@ Item {
   // accent; a strike is the damage, so it wears the urgent colour. Everything
   // else stays in the theme's text ramp rather than inventing a palette.
   readonly property color tone: {
-    if (!valid) return Color.lock.placeholder
-    if (card.op === Duel.CLEAR) return Color.accent
-    if (card.op === Duel.STRIKE) return Color.urgent
-    if (card.op === Duel.MULT) return Color.lock.text
-    return Color.lock.placeholder
+    if (!valid) return Commons.Color.lock.placeholder
+    if (card.op === Duel.CLEAR) return Commons.Color.accent
+    if (card.op === Duel.STRIKE) return Commons.Color.urgent
+    if (card.op === Duel.MULT) return Commons.Color.lock.text
+    return Commons.Color.lock.placeholder
   }
 
   readonly property color label: spent || dimmed
-    ? Color.lock.placeholder
-    : (highlighted ? Color.lock.text : tone)
+    ? Commons.Color.lock.placeholder
+    : (highlighted ? Commons.Color.lock.text : tone)
 
   readonly property var borderSpec: Border.surfaceSpec(
     "lock",
     highlighted ? "border-active" : "border",
-    highlighted ? Color.lock.borderActive : Color.lock.border,
+    highlighted ? Commons.Color.lock.borderActive : Commons.Color.lock.border,
     highlighted ? 2 : 1,
     "border-alpha"
   )
@@ -65,7 +66,7 @@ Item {
   BorderSurface {
     id: frame
     anchors.fill: parent
-    color: Color.lock.background
+    color: Commons.Color.lock.background
     borderSpec: root.borderSpec
     radius: Style.cornerRadius
     clip: true
@@ -83,7 +84,7 @@ Item {
       radius: Style.cornerRadius
       color: "transparent"
       border.width: 2
-      border.color: Color.urgent
+      border.color: Commons.Color.urgent
       opacity: root.flash ? 1 : 0
       visible: opacity > 0
 
@@ -128,7 +129,7 @@ Item {
       anchors.rightMargin: frame.borderRight + Style.spacing.sm
       anchors.verticalCenter: parent.verticalCenter
       text: root.valid ? card.name : ""
-      color: root.spent || root.dimmed ? Color.lock.placeholder : Color.lock.text
+      color: root.spent || root.dimmed ? Commons.Color.lock.placeholder : Commons.Color.lock.text
       font.family: Style.font.family
       font.pixelSize: Style.font.body
       horizontalAlignment: Text.AlignHCenter
@@ -145,7 +146,7 @@ Item {
       anchors.bottom: parent.bottom
       anchors.bottomMargin: frame.borderBottom + Style.spacing.xs
       text: root.valid ? Duel.opDetail(card.op, card.value) : ""
-      color: Color.lock.placeholder
+      color: Commons.Color.lock.placeholder
       font.family: Style.font.family
       font.pixelSize: Style.font.caption
       horizontalAlignment: Text.AlignHCenter

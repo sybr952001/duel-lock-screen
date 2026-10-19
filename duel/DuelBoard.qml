@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 import "DuelModel.js" as Duel
 
@@ -127,7 +128,7 @@ Item {
     Text {
       width: parent.width
       text: "DUEL PUZZLE"
-      color: Color.lock.placeholder
+      color: Commons.Color.lock.placeholder
       font.family: Style.font.family
       font.pixelSize: Style.font.caption
       font.letterSpacing: 3
@@ -139,8 +140,8 @@ Item {
       objectName: "opponentCard"
       width: root.opponentWidth
       height: root.opponentHeight
-      color: Color.lock.background
-      borderSpec: Border.surfaceSpec("lock", "border", Color.lock.border, 1, "border-alpha")
+      color: Commons.Color.lock.background
+      borderSpec: Border.surfaceSpec("lock", "border", Commons.Color.lock.border, 1, "border-alpha")
       radius: Style.cornerRadius
       clip: true
 
@@ -158,7 +159,7 @@ Item {
         Text {
           width: parent.width
           text: "OPPONENT"
-          color: Color.lock.placeholder
+          color: Commons.Color.lock.placeholder
           font.family: Style.font.family
           font.pixelSize: Style.font.caption
           font.letterSpacing: 1.6
@@ -167,7 +168,7 @@ Item {
         Text {
           width: parent.width
           text: root.session.opponentName
-          color: Color.lock.text
+          color: Commons.Color.lock.text
           font.family: Style.font.family
           font.pixelSize: Style.font.body
           elide: Text.ElideRight
@@ -179,7 +180,7 @@ Item {
         Text {
           width: parent.width
           text: "FACE-UP \u00B7 BLOCKS DAMAGE"
-          color: Color.urgent
+          color: Commons.Color.urgent
           font.family: Style.font.family
           font.pixelSize: Style.font.caption
           font.letterSpacing: 0.6
@@ -198,7 +199,7 @@ Item {
       Text {
         anchors.baseline: lpValue.baseline
         text: "LP"
-        color: Color.lock.placeholder
+        color: Commons.Color.lock.placeholder
         font.family: Style.font.family
         font.pixelSize: Style.font.bodySmall
         font.letterSpacing: 1.2
@@ -207,7 +208,7 @@ Item {
       Text {
         id: lpValue
         text: root.session.ready ? root.session.target : 0
-        color: Color.lock.text
+        color: Commons.Color.lock.text
         font.family: Style.font.family
         font.pixelSize: Style.font.heading * 1.75
         font.weight: Font.DemiBold
@@ -234,7 +235,7 @@ Item {
       height: Math.max(implicitHeight, Math.round(Style.font.bodySmall * 1.5))
       verticalAlignment: Text.AlignVCenter
       text: root.message
-      color: root.messageIsProblem ? Color.urgent : Color.accent
+      color: root.messageIsProblem ? Commons.Color.urgent : Commons.Color.accent
       font.family: Style.font.family
       font.pixelSize: Style.font.bodySmall
       horizontalAlignment: Text.AlignHCenter
@@ -253,7 +254,7 @@ Item {
         if (!root.session.cleared) return "YOUR HAND \u2014 CLEAR THE MONSTER FIRST"
         return "YOUR HAND \u2014 CLICK TO LINK, LEFT TO RIGHT"
       }
-      color: Color.lock.placeholder
+      color: Commons.Color.lock.placeholder
       font.family: Style.font.family
       font.pixelSize: Style.font.caption
       font.letterSpacing: 1.4
@@ -319,7 +320,7 @@ Item {
         height: Style.space(38)
         text: "Undo"
         bordered: true
-        foreground: Color.lock.text
+        foreground: Commons.Color.lock.text
         background: "transparent"
         fontSize: Style.font.body
         visible: root.session.chain.length > 0
@@ -331,7 +332,7 @@ Item {
         height: Style.space(38)
         text: root.won ? "Field Cleared" : "Declare Attack"
         bordered: true
-        foreground: root.won ? Color.accent : Color.lock.text
+        foreground: root.won ? Commons.Color.accent : Commons.Color.lock.text
         background: "transparent"
         fontSize: Style.font.body
         // Disabled until the chain is legal and has crossed the field, so an

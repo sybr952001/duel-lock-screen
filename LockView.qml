@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 import "duel"
 
@@ -58,8 +59,8 @@ Item {
   readonly property bool showPasswordCursor: inputEnabled && duelSolved && !authenticatingPassword && failureMessage.length === 0
   readonly property bool errorState: failureMessage.length > 0
   readonly property var inputBorderSpec: errorState
-    ? Border.surfaceSpec("lock", "border-error", Color.lock.borderError, root.outlineThickness, "border-alpha")
-    : Border.surfaceSpec("lock", "border-active", Color.lock.borderActive, root.outlineThickness, "border-alpha")
+    ? Border.surfaceSpec("lock", "border-error", Commons.Color.lock.borderError, root.outlineThickness, "border-alpha")
+    : Border.surfaceSpec("lock", "border-active", Commons.Color.lock.borderActive, root.outlineThickness, "border-alpha")
 
   signal submitPassword(string password)
   signal passwordTextEdited(string password)
@@ -129,7 +130,7 @@ Item {
 
   Rectangle {
     anchors.fill: parent
-    color: Color.background
+    color: Commons.Color.background
 
     Image {
       id: wallpaper
@@ -175,7 +176,7 @@ Item {
     Rectangle {
       id: scrim
       anchors.fill: parent
-      color: Util.alpha(Color.background, 0.72)
+      color: Util.alpha(Commons.Color.background, 0.72)
       visible: opacity > 0
       opacity: root.duelSolved ? 1 : 0
 
@@ -202,7 +203,7 @@ Item {
         Text {
           width: parent.width
           text: "DUEL WON"
-          color: Color.accent
+          color: Commons.Color.accent
           font.family: Style.font.family
           font.pixelSize: Style.font.body
           font.letterSpacing: 3
@@ -212,7 +213,7 @@ Item {
         Text {
           width: parent.width
           text: "Now enter your password to log in."
-          color: Color.lock.placeholder
+          color: Commons.Color.lock.placeholder
           font.family: Style.font.family
           font.pixelSize: Style.font.bodySmall
           horizontalAlignment: Text.AlignHCenter
@@ -223,7 +224,7 @@ Item {
           id: inputField
           width: root.fieldWidth
           height: root.fieldHeight
-          color: Color.lock.background
+          color: Commons.Color.lock.background
           borderSpec: root.inputBorderSpec
           radius: Style.cornerRadius
           clip: true
@@ -246,16 +247,16 @@ Item {
             echoMode: TextInput.Password
             passwordCharacter: "\u25CF"
             passwordMaskDelay: 0
-            color: Color.lock.text
-            selectionColor: Color.lock.selection
-            selectedTextColor: Color.lock.text
+            color: Commons.Color.lock.text
+            selectionColor: Commons.Color.lock.selection
+            selectedTextColor: Commons.Color.lock.text
             font.family: Style.font.family
             font.pixelSize: text.length > 0 ? Math.max(1, Math.floor(root.passwordDotFontSize * root.passwordDotScale)) : root.fieldFontSize
             font.letterSpacing: text.length > 0 ? root.passwordDotLetterSpacing * root.passwordDotScale : 0
             cursorVisible: activeFocus && root.showPasswordCursor && text.length > 0
             cursorDelegate: Rectangle {
               width: 2
-              color: Color.lock.text
+              color: Commons.Color.lock.text
               visible: passwordInput.cursorVisible
             }
 
@@ -287,7 +288,7 @@ Item {
             anchors.fill: passwordInput
             text: root.authenticatingPassword ? "Checking…" : (root.failureMessage.length > 0 ? root.failureMessage : root.placeholderText)
             visible: passwordInput.text.length === 0
-            color: root.authenticatingPassword ? Color.lock.text : (root.failureMessage.length > 0 ? Color.lock.textError : Color.lock.placeholder)
+            color: root.authenticatingPassword ? Commons.Color.lock.text : (root.failureMessage.length > 0 ? Commons.Color.lock.textError : Commons.Color.lock.placeholder)
             font.family: Style.font.family
             font.pixelSize: root.fieldFontSize
             font.italic: !root.authenticatingPassword && root.failureMessage.length > 0
@@ -307,7 +308,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             visible: root.fingerprintConfigured
             text: "\uF0237"
-            color: Color.lock.placeholder
+            color: Commons.Color.lock.placeholder
             font.family: Style.font.family
             font.pixelSize: Math.round(root.fieldFontSize * 1.1)
             horizontalAlignment: Text.AlignHCenter

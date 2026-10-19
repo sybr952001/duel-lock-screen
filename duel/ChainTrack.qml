@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 import "DuelModel.js" as Duel
 
@@ -25,8 +26,8 @@ Item {
   // The total is urgent when the chain has already overshot, because a chain
   // past lethal is a dead line no matter what gets linked after it.
   readonly property color totalColor: exact
-    ? Color.accent
-    : (over ? Color.urgent : Color.lock.text)
+    ? Commons.Color.accent
+    : (over ? Commons.Color.urgent : Commons.Color.lock.text)
 
   Text {
     id: label
@@ -34,7 +35,7 @@ Item {
     anchors.left: parent.left
     anchors.top: parent.top
     text: "CHAIN"
-    color: Color.lock.placeholder
+    color: Commons.Color.lock.placeholder
     font.family: Style.font.family
     font.pixelSize: Style.font.caption
     font.letterSpacing: 1.2
@@ -63,7 +64,7 @@ Item {
     anchors.top: totalText.bottom
     anchors.topMargin: -Style.spacing.xxs
     text: "of " + root.target + " LP"
-    color: Color.lock.placeholder
+    color: Commons.Color.lock.placeholder
     font.family: Style.font.family
     font.pixelSize: Style.font.caption
   }
@@ -79,7 +80,7 @@ Item {
     text: root.ready && !root.session.cleared
       ? "The monster is face-up. Clear it before anything can deal damage."
       : "Link your hand left to right. Click a link to cut the chain there."
-    color: Color.lock.placeholder
+    color: Commons.Color.lock.placeholder
     font.family: Style.font.family
     font.pixelSize: Style.font.body
     font.italic: true
@@ -141,7 +142,7 @@ Item {
     anchors.verticalCenter: chainRow.verticalCenter
     visible: root.ready && root.session.chain.length > 0
     text: "="
-    color: Color.lock.placeholder
+    color: Commons.Color.lock.placeholder
     font.family: Style.font.family
     font.pixelSize: Style.font.title
   }
