@@ -5,11 +5,11 @@ puzzle in front of your session lock. Win the board, *then* enter your password.
 
 ```
 ┌──────────────────────────────────────────┐
-│  Ironclad Knight            LP 1200      │
+│  Blue-Eyes White Dragon     LP 1200      │
 │  ▣ face-up monster                         │
 │                                          │
-│  hand:  Solar Eclipse  Gale Rend  Twin   │
-│         Fang         Ember Slash  Fang   │
+│  hand:  Dark Hole     Mokey Mokey  Mega- │
+│         Fissure       Mystical Elf  morph │
 │                                          │
 │  chain:  ◉  ⚔ 300  ×2      = 600         │
 │                                          │
@@ -95,9 +95,12 @@ Then:
   puzzle — the target would be the number printed on a card in your own hand.
 - **No repeats.** A hand cannot hold the same op+value pair twice.
 
-Card and opponent names are invented rather than lifted from real cards, and
-they follow the genre's grammar rather than any particular card's text. The
-puzzle needs numbers, not a card database.
+Card and opponent names are the real cards from the duel-login set — the
+opponents are the monsters it duels against, and the hand's clears are the
+game's actual removal. The numbers are still the chain's own, not a card
+database: a strike is a monster's printed ATK, but the multipliers are the
+lock's mechanic wearing a card's name, because no single real card triples or
+septuples a total.
 
 ## Layout
 

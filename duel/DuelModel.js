@@ -44,22 +44,26 @@ var GATED_OPS = [STRIKE, MULT, HALVE];
 // ---------------------------------------------------------------------------
 // Card pool
 //
-// Names are invented rather than lifted from real cards, but they follow the
-// genre's grammar: a monster, a spell that answers a monster, a quick-play
-// that scales a number, a drain that cuts one in half.
+// Names are real Yu-Gi-Oh cards, chosen so each one still means what its op
+// does: the CLEARs are the game's actual board wipes and removal, the STRIKEs
+// are monsters whose printed ATK is the value they strike for, and the HALVEs
+// are the real halving cards. The MULTs carry the card's own flavour rather
+// than its exact text, because no single real card triples or septuples a
+// number -- the chain is the lock's own mechanic, and a hand only ever shows
+// the op and the number.
 // ---------------------------------------------------------------------------
 
 var CARD_POOL = [
   // CLEAR -- the only way past the face-up monster. Several names so the hand
   // does not read as "the one clear plus four numbers" every single board.
-  { name: "Solar Eclipse",    op: CLEAR,  value: 0 },
-  { name: "Null Field",       op: CLEAR,  value: 0 },
-  { name: "Void Sweep",       op: CLEAR,  value: 0 },
-  { name: "Iron Purge",       op: CLEAR,  value: 0 },
-  { name: "Gravity Collapse", op: CLEAR,  value: 0 },
-  { name: "Blackout",         op: CLEAR,  value: 0 },
-  { name: "Starless Sky",     op: CLEAR,  value: 0 },
-  { name: "Horizon Break",    op: CLEAR,  value: 0 },
+  { name: "Dark Hole",          op: CLEAR,  value: 0 },
+  { name: "Raigeki",            op: CLEAR,  value: 0 },
+  { name: "Smashing Ground",    op: CLEAR,  value: 0 },
+  { name: "Fissure",            op: CLEAR,  value: 0 },
+  { name: "Hammer Shot",        op: CLEAR,  value: 0 },
+  { name: "Lightning Vortex",   op: CLEAR,  value: 0 },
+  { name: "Torrential Tribute", op: CLEAR,  value: 0 },
+  { name: "Mirror Force",       op: CLEAR,  value: 0 },
 
   // STRIKE -- raw damage. A strike is never wrong, only ever the wrong number
   // or in the wrong place, which is what makes the hand full of near-misses.
@@ -68,58 +72,60 @@ var CARD_POOL = [
   // gives the pool a handful of distinct op+value pairs, and since a hand may
   // not repeat one, that collapses the board space to a few hundred hands --
   // which a lock screen you unlock every day runs straight through.
-  { name: "Gale Rend",      op: STRIKE, value: 300 },
-  { name: "Ember Slash",    op: STRIKE, value: 400 },
-  { name: "Iron Talon",     op: STRIKE, value: 500 },
-  { name: "Stone Breaker",  op: STRIKE, value: 600 },
-  { name: "Steel Fang",     op: STRIKE, value: 700 },
-  { name: "Tidal Crash",    op: STRIKE, value: 800 },
-  { name: "Cataclysm Claw", op: STRIKE, value: 900 },
-  { name: "Rift Fang",      op: STRIKE, value: 1000 },
-  { name: "Sundering Roar", op: STRIKE, value: 1100 },
-  { name: "Pyre Rend",      op: STRIKE, value: 1200 },
-  { name: "Obsidian Talon", op: STRIKE, value: 1300 },
-  { name: "Glacier Breaker", op: STRIKE, value: 1400 },
-  { name: "Thunder Cradle", op: STRIKE, value: 1500 },
-  { name: "Wyrm's Verdict", op: STRIKE, value: 1600 },
-  { name: "Eclipse Fang",   op: STRIKE, value: 1800 },
-  { name: "Annihilation",   op: STRIKE, value: 2000 },
-  { name: "Worldbreaker",   op: STRIKE, value: 2400 },
+  { name: "Mokey Mokey",          op: STRIKE, value: 300 },
+  { name: "Bone Mouse",           op: STRIKE, value: 400 },
+  { name: "Wing Egg Elf",         op: STRIKE, value: 500 },
+  { name: "Petit Angel",          op: STRIKE, value: 600 },
+  { name: "Winged Cleaver",       op: STRIKE, value: 700 },
+  { name: "Mystical Elf",         op: STRIKE, value: 800 },
+  { name: "Dharma Cannon",        op: STRIKE, value: 900 },
+  { name: "Sangan",               op: STRIKE, value: 1000 },
+  { name: "Dark Rabbit",          op: STRIKE, value: 1100 },
+  { name: "Silver Fang",          op: STRIKE, value: 1200 },
+  { name: "Feral Imp",            op: STRIKE, value: 1300 },
+  { name: "Celtic Guardian",      op: STRIKE, value: 1400 },
+  { name: "Kojikocy",             op: STRIKE, value: 1500 },
+  { name: "Inpachi",              op: STRIKE, value: 1600 },
+  { name: "Gil Garth",            op: STRIKE, value: 1800 },
+  { name: "Dark Magician Girl",   op: STRIKE, value: 2000 },
+  { name: "Red-Eyes Black Dragon", op: STRIKE, value: 2400 },
 
   // MULT -- scales the running total, so where it sits in the chain decides
   // whether it doubles a strike or doubles an already-doubled pair.
-  { name: "Twin Fang",     op: MULT, value: 2 },
-  { name: "Trident Rise",   op: MULT, value: 3 },
-  { name: "Quadra Fang",    op: MULT, value: 4 },
-  { name: "Pentacle Seal",  op: MULT, value: 5 },
-  { name: "Septuple Seal",  op: MULT, value: 7 },
+  { name: "Megamorph",                 op: MULT, value: 2 },
+  { name: "Delta Attacker",            op: MULT, value: 3 },
+  { name: "Multiplication of Ants",    op: MULT, value: 4 },
+  { name: "Five-Headed Dragon",        op: MULT, value: 5 },
+  { name: "Seven Tools of the Bandit", op: MULT, value: 7 },
 
   // HALVE -- floors, and the floor is the whole reason the arithmetic is not
   // solvable by eye in one pass. Two names, but a hand may only hold one halve
   // (they are the same op at the same value), so this is variety, not depth.
-  { name: "Blood Drain",  op: HALVE, value: 0 },
-  { name: "Siphon Field", op: HALVE, value: 0 }
+  { name: "Shrink",    op: HALVE, value: 0 },
+  { name: "Half Shut", op: HALVE, value: 0 }
 ];
 
 // ---------------------------------------------------------------------------
 // Opponents
 //
-// `atk` is never printed. A number next to the monster would read as
-// arithmetic the chain is supposed to account for, and it is not: the monster
-// is a wall, not a damage source. LP is the only number that means anything.
+// Real monsters from the duel-login card set. `atk` is never printed: a number
+// next to the monster would read as arithmetic the chain is supposed to account
+// for, and it is not -- the monster is a wall, not a damage source. LP is the
+// only number that means anything. The printed ATK is carried anyway so the
+// name and its stat stay honest.
 // ---------------------------------------------------------------------------
 
 var OPPONENT_POOL = [
-  { name: "Ironclad Knight",   atk: 1900 },
-  { name: "Granite Sentinel",  atk: 2100 },
-  { name: "Hollow Colossus",   atk: 2600 },
-  { name: "Solar Seraph",      atk: 2200 },
-  { name: "Ember Construct",   atk: 2500 },
-  { name: "Weeping Colossus",  atk: 2300 },
-  { name: "Fractured Titan",   atk: 2450 },
-  { name: "Sandglass Choir",   atk: 1650 },
-  { name: "Crown of Greed",    atk: 2000 },
-  { name: "Tempest Herald",    atk: 2050 }
+  { name: "Blue-Eyes White Dragon", atk: 3000 },
+  { name: "Dark Magician",          atk: 2500 },
+  { name: "Summoned Skull",         atk: 2500 },
+  { name: "Jinzo",                  atk: 2400 },
+  { name: "Red-Eyes Black Dragon",  atk: 2400 },
+  { name: "Buster Blader",          atk: 2600 },
+  { name: "Gaia The Fierce Knight", atk: 2300 },
+  { name: "Dark Magician Girl",     atk: 2000 },
+  { name: "Cyber End Dragon",       atk: 4000 },
+  { name: "Elemental HERO Neos",    atk: 2500 }
 ];
 
 // A hand is this wide. Five keeps the chain space around 300 sequences, which
